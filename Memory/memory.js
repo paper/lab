@@ -445,6 +445,6 @@
 		});
 	};
 	
-})(window,undefined);
+})(window);
 
 
