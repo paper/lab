@@ -3,13 +3,17 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
 		<title>memory</title>
+    
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    
 		<link rel="stylesheet" type="text/css" href="../css/FIP-1.0.css" />
 		<link rel="stylesheet" type="text/css" href="memory.css" />
 		
-		<script type="text/javascript" src="../js/FIP-1.0.js"></script>
+		<script type="text/javascript" src="../js/FIP-1.0.js?2014"></script>
 		<script type="text/javascript">
 			//全局变量
 			var global_para={
@@ -49,7 +53,9 @@
 							},false);
 							
 							document.getElementById("lastMissionBt").addEventListener(global_para.eventClick,function(){
-								memory.mission2();
+								memory.mission2( function(){
+                  memory.isLastMission = true;
+                } );
 							},false);
 						});
 					});

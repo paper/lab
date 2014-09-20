@@ -7,6 +7,8 @@
  */
 
 (function(window,undefined){
+
+  
 	var Memory=window.Memory=function(canvasId){
 			var canvas=document.getElementById(canvasId);
 			
@@ -98,11 +100,22 @@
 	};
 	
 	//显示成绩
-	function showResult(){
+	function showResult( isLastMission ){
 		hide(gameHelp);
 		time.stopTime();
-		yourTime.innerHTML=gameTime.textContent;
+    
+    var t = gameTime.textContent;
+    
+		yourTime.innerHTML = t;
 		show(showMsg);
+    
+    
+    if( isLastMission ){
+      //chang title
+      var titleMsg = "我竟然只使用了" + t + "就完成了！太厉害了吧！";
+      document.title = titleMsg;
+    }
+    
 	};
 	
 	//得到鼠标(或手指)在canvas点击时的坐标
@@ -205,6 +218,8 @@
 		ctx2d.fillRect(x, y, w, h);
 	};
 	
+  Memory.prototype.isLastMission = false;
+  
 	//画游戏界面
 	//row 行数;row_len 每行的个数;w,h box 的宽度，高度;dx 间距
 	Memory.prototype.drawGameInterface = function(row,row_len,w,h,dx){		
@@ -350,8 +365,8 @@
 		
 	//判断游戏是否结束
 	Memory.prototype.gameOver=function(){
-		if(remove_cache.length==boxes.length){
-			showResult();
+		if(remove_cache.length == boxes.length){
+			showResult(this.isLastMission);
 		}
 	};
 	
@@ -439,7 +454,7 @@
 				allowRestart();
 				
 				lastMissionBt.innerHTML="再来一次?";
-				
+
 				isFunction(callback) && callback();
 			});
 		});
