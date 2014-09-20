@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="format-detection" content="telephone=no" />
+		<title>Pick Stick</title>
+		<link rel="stylesheet" type="text/css" href="../css/FIP-1.0.css" />
+		<link rel="stylesheet" type="text/css" href="pick-stick.css" />
+	</head>
+	<body>
+		<div id="page">
+			<div id="gameinfo">
+				
+			</div>
+			
+			<div class="wrap" id="wrap">
+				<div class="score">
+					<div class="time">
+						<span id="time_min">00</span>:<span id="time_sec">00</span>
+					</div>
+					<div id="resultNumber">0</div>
+				</div>
+				
+				<div id="sticksWrap"></div>
+			</div>
+
+			<button class="button" id="restart" onclick="stickRestart();">Restart</button>
+		</div>
+		
+		<script type="text/javascript" src="../js/FIP-1.0.js"></script>
+		<script type="text/javascript" src="pick-stick.js"></script>
+		
+		<script type="text/javascript">
+			
+			var cs=createSticks({
+					'wrapperId':'wrap',
+					'sticksWrapId':'sticksWrap',
+					'restartId':'restart',
+					'resultId':'resultNumber',
+					'timeMinId':'time_min',
+					'timeSecId':'time_sec',
+					'num':10
+				});
+			cs.create();
+			
+			function stickRestart(){
+				cs.create();
+			};
+			
+			//两个手指按住屏幕，就刷新了。
+			try {
+				document.getElementById('page').addEventListener('touchstart', function(event){
+					if (event.targetTouches[0].pageX && event.targetTouches[1].pageX) {
+					
+						stickRestart();
+					}
+				});
+			}catch(e){}
+			
+		</script>
+	</body>
+</html>

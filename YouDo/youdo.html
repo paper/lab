@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<meta charset="utf-8" />
+      	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="format-detection" content="telephone=no" />
+		<link rel="shortcut icon" href="images/favicon.png" />
+		<link rel="apple-touch-icon" href="images/favicon-apple.png" />
+		<title>youdo</title>
+		<link rel="stylesheet" href="../css/FIP-1.0.css" />
+		<link rel="stylesheet" href="css/youdo.css" />
+		
+		<script src="../js/FIP-1.0.js"></script>
+		<script type="text/javascript">
+			FIP.ready(function(){
+				FIP.stopPageDrag();
+
+				window.move=function(num,callback){
+					var step=320;
+					var node=FIP.$id('sections');
+					var b=parseInt( node.style.marginLeft );
+					var e=b+step*num;
+					
+					FIP.animate({
+						elem:node,
+						begin:b,
+						end:e,
+						doingCallback:function(v){
+							this.style.marginLeft=v+'px';
+						},
+						endCallback:function(){
+							callback && callback();
+						}
+					});
+				};
+				
+				/*========================================
+	 			* cover go
+				 ========================================*/
+				document.getElementById("startGame").addEventListener(FIP.touchClick,function(){
+					move(-1);
+				},false);
+				
+				FIP.loadScriptEx(['js/youdo.js'],function(){
+					FIP.loading.createLoading('Loading JS...');
+				},function(){
+					FIP.loading.removeLoading();
+				});
+
+			});//end ready();
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<div class="sections" id="sections" style="margin-left:0px;">
+				<section id="gameCover" class="page" style="display:;">
+					<h1 class="hidden">you do</h1>
+				
+					<nav class="start-game">
+						<a class="btStyle1" href="javascript:;" id="startGame">~ go ~</a>
+					</nav>
+					
+					<div id="gameCoverInfo">
+						<p>Made By Paper</p>
+						<p>Iphone4 & Chrome & Safari & Firefox & IE9</p>
+					</div>
+				</section>
+				
+				<section id="differenceA" class="page" style="display:;">
+					<div class="page-hd">
+						<h1 class="fontStyle1 f16">You Do</h1>
+						<a id="get_infomation_btn" href="javascript:;" class="info" title="get infomation">i</a>
+					</div>
+					
+					<div class="page-bd">
+						<div class="game-btns" id="game_btns">
+							<input type="hidden" id="game_btns_value" value="-1" autocomplete="off" />
+							<ul class="clearfix">
+								<li><a class="btStyle1" href="javascript:;">
+									<span class="fontStyle1">剪刀</span>
+								</a></li>
+								<li><a class="btStyle1" href="javascript:;">
+									<span class="fontStyle1">石头</span>
+								</a></li>
+								<li><a class="btStyle1" href="javascript:;">
+									<span class="fontStyle1" style="margin-top:60px;">布</span>
+								</a></li>
+							</ul>
+						</div>
+						
+						<div id="differenceA_msg" class="msg" style="display:none;">
+							<p>请选择一项 :)</p>
+						</div>
+						
+						<div class="lets-go">
+							<a id="play_btn" href="javascript:;" class="btStyle1 play-btn play-btn-disabled">
+								<span class="fontStyle1">OK</span>
+							</a>
+						</div>
+					</div>
+				</section>
+				
+				<section id="differenceB" class="page" style="display:none;">
+					<div class="page-hd">
+						<h1 id="differenceB_h1"  class="fontStyle1 f16">Scissors</h1>
+						<a id="differenceB_back" class="back-btn" href="javascript:;">Back</a>
+					</div>
+					
+					<div class="page-bd">
+						<div class="show-img">
+							<img id="differenceB_image" alt="" />
+							<br />
+							<span id="differenceB_name_zh" ></span>
+						</div>
+					</div>
+					
+					<div class="differenceB-cover" id="differenceB_cover">
+						<p>
+							<a id="differenceB_cover_btn" class="btStyle1" href="javascript:;">
+								<span class="fontStyle1">Click Me<br />At the same time !</span>
+							</a>
+						</p>
+					</div>
+				</section>
+					
+				<section id="differenceC" class="page" style="display:none;">
+					<div class="page-hd">
+						<h1 class="fontStyle1 f16">Infomation</h1>
+						<a id="differenceC_back" class="back-btn" href="javascript:;">Back</a>
+					</div>
+					
+					<div class="page-bd">
+						<div class="infomation-main btStyle1">
+							<div class="pd">
+								<p>你想找个酷的就别来了，你要想找个爽的就别下了。App计算机硕士学历以上的免谈，省得下载后咱们互相都会失望。没期待你对我有多崇拜，您要真是一Super App我也接不住。外表时尚，内心保守，身心都健康的一般App就行，要是多少还有点婉约那就更靠谱了。</p>
+								<p>我喜欢简约，而且简单的App，每次交流都感觉自己像被洗礼了一样。说得够具体了吧。</p>
+								<p>自我介绍一下，我出生不久，属于2010后。性格open，人品五五开，不算老实，但天生胆小，越狱破解不犯法我也下不去手，总体而言属于对Apps对Internet有益无害的一类。</p>
+								<p>有意者使用，非诚勿扰。 </p>
+								<p class="tr">-- paper</p>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</body>
+</html>

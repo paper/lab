@@ -1,0 +1,743 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
+	<meta name="format-detection" content="telephone=no" />
+	<title>幸运大翻牌</title>
+	<style type="text/css">
+		/*==========Reset===========*/
+		
+		*{margin:0;padding:0;}
+		html{background:#000;-webkit-text-size-adjust:none;-webkit-user-select:none;}
+		body{font-family: Helvetica;line-height:1.5;}
+		.clearfix{}
+		.clearfix:after{content:".";font-size:0;height:0;clear:both;visibility:hidden;display:block;}
+		ul,ol,li{list-style:none;}
+		
+		
+		/*==========Ico===========*/
+		.ico-key,
+		.ico-money-1,
+		.ico-money-1-mini,
+		.ico-money-2,
+		.ico-money-2-mini{
+			display:inline-block;
+		}
+		.ico-key{
+			width:15px;
+			height:16px;
+			background:url(images/key.png);
+		}
+		.ico-money-1{
+			width:39px;
+			height:38px;
+			background:url(images/money_1.png);
+		}
+		.ico-money-1-mini{
+			width:32px;
+			height:32px;
+			background:url(images/money_1_mini.png);
+		}
+		.ico-money-2{
+			width:57px;
+			height:41px;
+			background:url(images/money_2.png);
+		}
+		.ico-money-2-mini{
+			width:43px;
+			height:34px;
+			background:url(images/money_2_mini.png);
+		}
+		
+		.ico-gift-vip,
+		.ico-gift-exp2,
+		.ico-gift-15,
+		.ico-gift-30,
+		.ico-gift-60,
+		
+		.ico-gift-vip-mini,
+		.ico-gift-exp2-mini,
+		.ico-gift-15-mini,
+		.ico-gift-30-mini,
+		.ico-gift-60-mini{
+			display:inline-block;
+			background:url(images/gift.png);
+			-webkit-box-shadow:0 1px 3px #555;
+			border-radius:3px;
+		}
+		
+		.ico-gift-vip,
+		.ico-gift-exp2,
+		.ico-gift-15,
+		.ico-gift-30,
+		.ico-gift-60{
+			width:49px;
+			height:35px;
+		}
+		
+		.ico-gift-vip-mini,
+		.ico-gift-exp2-mini,
+		.ico-gift-15-mini,
+		.ico-gift-30-mini,
+		.ico-gift-60-mini{
+			width:40px;
+			height:29px;
+		}
+		
+		
+		.ico-gift-vip{background-position:0 0;}
+		.ico-gift-exp2{background-position:-50px 0;}
+		.ico-gift-15{background-position:-100px 0;}
+		.ico-gift-30{background-position:-150px 0;}
+		.ico-gift-60{background-position:-200px 0;}
+		
+		.ico-gift-vip-mini{background-position:0 -36px;}
+		.ico-gift-exp2-mini{background-position:-50px -36px;}
+		.ico-gift-15-mini{background-position:-100px -36px;}
+		.ico-gift-30-mini{background-position:-150px -36px;}
+		.ico-gift-60-mini{background-position:-200px -36px;}
+		
+		
+		/*==========Page===========*/
+		.pic-cover-word{
+			position:relative;
+			text-align:center;
+			font-size:12px;
+		}
+		.pic-cover-word span{
+			width:100%;
+			height:100%;
+			position:absolute;
+			left:0;
+			top:0;
+		}
+		
+		.luck-poker-main{
+			width:395px;
+			height:255px;
+			margin:0 auto;
+			background:#207E8B url(images/bg.jpg) no-repeat;
+			overflow:hidden;
+			position:relative;
+		}
+		
+		.luck-poker-main .title{
+			width:187px;
+			height:28px;
+			margin:18px auto 0;
+			color:#E8DCB4;
+		}
+		.luck-poker-main .title span{
+			background:#207E8B url(images/title.jpg) no-repeat;
+		}
+		
+		
+		.luck-poker-main .intro{
+			color:#fff;
+			text-align:center;
+			padding:6px 0 0;
+			font-size:16px;
+			text-shadow:0 1px 1px #222;
+		}
+		
+		
+		/*==========翻牌===========*/
+		.poker-wrapper{}
+		.poker-wrapper ol{padding:10px 0 0 7px;position:relative;height:97px;}
+		.poker-wrapper ol li{
+			width:60px;
+			float:left;
+			position:absolute;
+		}
+		
+		.poker-wrapper ol li.poker-0{left:21px;}
+		.poker-wrapper ol li.poker-1{left:94px;}
+		.poker-wrapper ol li.poker-2{left:169px;}
+		.poker-wrapper ol li.poker-3{left:242px;}
+		.poker-wrapper ol li.poker-4{left:318px;}
+		
+		.poker-front,
+		.poker-back{
+			position:relative;
+			width:60px;
+			height:79px;
+			border-radius:5px;
+			-webkit-box-shadow:0 2px 5px #555;
+			text-align:center;
+			vertical-align:middle;
+		}
+		
+		.pkoer-gift-wrap{
+			display:table-cell;
+			width:60px;
+			height:79px;
+			text-align:center;
+			vertical-align:middle;
+		}
+		
+		.poker-front{
+			-webkit-box-shadow:0 3px 6px #333;
+			background:url(images/poker_front.png) no-repeat;
+		}
+		
+		.poker-back{
+			background:url(images/poker_back.png) no-repeat;
+		}
+
+		.poker-front span,
+		.poker-back span{vertical-align:middle;}
+		.poker-front span{display:inline-block;}
+		.poker-back span{display:none;}
+		
+		.poker-front p{
+			position:absolute;
+			width:100%;
+			bottom:-18px;
+			color:#fff;
+			font-size:12px;
+			text-align:center;
+			text-shadow:0 1px 1px #222;
+			height:14px;
+		}
+		.poker-back p{display:none;}
+		
+		/*========== 奖励 ===========*/
+		.award-main{
+			margin:10px auto 0;
+			width:372px;
+			height:53px;
+			border-radius:10px;
+			position:relative;
+			background-color:#FFF600;
+			background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #FFF600), color-stop(10%, #F6CD22), color-stop(100%, #EA7001));
+			-webkit-box-shadow:0 2px 2px #555;
+		}
+		/*=============== 2个分割线 ===========*/
+		.award-main .split-1,
+		.award-main .split-2{
+			height:40px;
+			width:1px;
+			background-color:#7C6845;
+			border-left:1px solid #F0C67B;
+			position:absolute;
+			top:8px;
+		}
+		.award-main .split-1{left:72px;}
+		.award-main .split-2{right:82px}
+		
+		.award-main h2{
+			color:#6F4112;
+			text-shadow:0 1px 0 #F6C821;
+			font-size:12px;
+			font-weight:normal;
+			width:60px;
+			float:left;
+			text-align:center;
+			padding:9px 0 0 9px;
+		}
+		
+		/*=============== 4个奖励 mini ===========*/
+		.award-main ol{
+			float:left;
+			padding:8px 0 0 10px;
+		}
+		.award-main ol li{
+			float:left;
+			margin-right:8px;
+			background-color:#C5901B;
+			width:45px;
+			height:40px;
+			border-radius:5px;
+			-webkit-box-shadow:inset 0 0 9px #555,0 2px 3px #F59E01;
+		}
+		
+		
+		.award-main ol li .award-main-deteil{
+			width:45px;
+			height:40px;
+			display:table-cell;
+			text-align:center;
+			vertical-align:middle;
+		}
+		
+		.award-main ol li .award-main-deteil span{
+			vertical-align:middle;
+		}
+		.award-main ol li .ico-key{
+			margin:-6px 0 0 0;
+		}
+		.award-main ol li p{
+			font-size:9px;
+			color:#714D08;
+			text-align:center;
+			line-height:1.1;
+			margin-top:-3px;
+		}
+		
+		/*=============翻牌机会============*/
+		.award-main .award-chance{
+			float:right;
+			width:78px;
+			margin:5px 4px 0 0;
+		}
+		.award-main .award-chance p{
+			font-size:12px;
+			text-align:center;
+			color:#6F4112;
+			text-shadow:0 1px 0 #F6C821;
+		}
+		.award-main .award-chance strong{
+			position:relative;
+			display:inline-block;
+			width:20px;
+			height:20px;
+			background-color:#000;
+			border-radius:4px;
+		}
+		.award-main .award-chance i{
+			position:absolute;
+			bottom:8px;
+			left:0;
+			width:100%;
+			height:9px;
+			border-radius:3px 3px 0 0;
+			
+			background-color:#714212;
+			background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #84501B), color-stop(100%, #6F4112));
+		}
+		.award-main .award-chance b{
+			position:absolute;
+			bottom:0;
+			left:0;
+			width:100%;
+			height:8px;
+			border-radius:0 0 3px 3px;
+			
+			background-color:#7F552B;
+			background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #865D32), color-stop(100%, #63380E));
+		}
+		.award-main .award-chance span{
+			font-size:21px;
+			text-shadow:0 1px 1px #000;
+			color:#fff;
+			position:absolute;
+			z-index:2;
+			width:20px;
+			height:20px;
+			text-align:center;
+			line-height:20px;
+		}
+		
+		
+		
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<section class="luck-poker-main" id="J-luck-poker-main">
+			<h1 class="title pic-cover-word"><span></span>幸运大翻牌</h1>
+			<p class="intro ts">连续登录可以获得更多翻牌机会</p>
+			
+			<!--翻牌-->
+			<div class="poker-wrapper" id="J-poker-wrapper">
+				<ol class="clearfix">
+					<li id="J-poker-wrap-0" class="poker-0">
+						<div class="poker-front" id="J-poker-0" data-i="0">
+							<div class="pkoer-gift-wrap"><span class="ico-gift-vip"></span></div>
+							<p id="J-poker-0-p">VIP卡</p>
+						</div>
+						
+					</li>
+					
+					<li id="J-poker-wrap-1" class="poker-1">
+						<div class="poker-front" id="J-poker-1" data-i="1">
+							<div class="pkoer-gift-wrap"><span class="ico-gift-exp2"></span></div>
+							<p id="J-poker-1-p">双倍经验卡</p>
+						</div>
+						
+					</li>
+					
+					<li id="J-poker-wrap-2" class="poker-2">
+						<div class="poker-front" id="J-poker-2" data-i="2">
+							<div class="pkoer-gift-wrap"><span class="ico-money-1"></span></div>
+							<p id="J-poker-2-p">1000筹码</p>
+						</div>
+						
+					</li>
+					
+					<li id="J-poker-wrap-3" class="poker-3">
+						<div class="poker-front" id="J-poker-3" data-i="3">
+							<div class="pkoer-gift-wrap"><span class="ico-money-2"></span></div>
+							<p id="J-poker-3-p">5000筹码</p>
+						</div>
+						
+					</li>
+					
+					<li id="J-poker-wrap-4" class="poker-4">
+						<div class="poker-front" id="J-poker-4" data-i="4">
+							<div class="pkoer-gift-wrap"><span class="ico-gift-60"></span></div>
+							
+							<p id="J-poker-4-p">60道具卡</p>
+						</div>
+					</li>
+				</ol>
+			</div>
+			
+			<!--奖励-->
+			<div class="award-wrapper">
+				<div class="award-main clearfix">
+					<h2>您今天获得的宝物：</h2>
+					
+					<div class="split-1"></div>
+					
+					<ol class="clearfix">
+						<li id="J-award-main-0">
+							<div class="award-main-deteil">
+								<span class="ico-gift-vip-mini"></span
+							</div>
+						</li>
+						
+						<li id="J-award-main-1">
+							<div class="award-main-deteil" id="J-award-main-deteil-1">
+								<span class="ico-key"></span>
+								<p>连续登录2天解锁</p>
+							</div>
+						</li>
+						
+						<li id="J-award-main-2">
+							<div class="award-main-deteil">
+								<span class="ico ico-key"></span>
+								<p>连续登录3天解锁</p>
+							</div>
+						</li>
+						
+						<li style="margin-right:0;" class="empty" id="J-award-main-3">
+							<div class="award-main-deteil">
+								<span class="ico-key"></span>
+								<p>连续登录5天解锁</p>
+							</div>
+						</li>
+					</ol>
+					
+					<div class="split-2"></div>
+					
+					<div class="award-chance">
+						<p>还剩下<strong><span id="J-award-chance">2</span><i></i><b></b></strong>次翻牌机会</p>
+					</div>
+					
+				</div>
+			</div>
+
+		</section>
+	</div>
+
+	
+	<script type="text/javascript">
+		//是否能够点击翻牌的锁
+		var G_touchKey=false;
+		
+		var G_position={
+			begin:[
+				[32,110],
+				[105,110],
+				[185,110],
+				[252,110],
+				[327,110]
+			],
+			end:[
+				[93,206],
+				[145,206],
+				[203,206],
+				[250,206]
+			]
+		}
+		
+		var r_left=[21,94,169,242,318];
+		
+		var r_left_v={
+			'21':0,
+			'94':1,
+			'169':2,
+			'242':3,
+			'318':4
+		}
+		
+		var speed=30;
+		
+		var pw0=document.getElementById("J-poker-wrap-0");
+		var pw1=document.getElementById("J-poker-wrap-1");
+		var pw2=document.getElementById("J-poker-wrap-2");
+		var pw3=document.getElementById("J-poker-wrap-3");
+		var pw4=document.getElementById("J-poker-wrap-4");
+		
+		var p0=document.getElementById("J-poker-0");
+		var p1=document.getElementById("J-poker-1");
+		var p2=document.getElementById("J-poker-2");
+		var p3=document.getElementById("J-poker-3");
+		var p4=document.getElementById("J-poker-4");
+		
+		//生成[0,1,2,3,4] 或者 [3,1,2,4,0] 这个数组（里面数字的位置随机）
+		function createRandomArray(){
+			var r=[0,1,2,3,4];
+			var len=r.length;
+			var n=Math.random().toString();
+			
+			var i=2;
+			//互换5次
+			var max=i+10;
+			
+			var temp,n1,n2;
+			
+			for(;i<max;i+=2){
+				n1=( +n.charAt(i) )%len;
+				n2=( +n.charAt(i+1) )%len;
+				
+				temp=r[n1];
+				r[n1]=r[n2];
+				r[n2]=temp;
+			}
+			
+			return r;
+		};
+		
+		//翻牌的事件
+		var transPokerEvent=(function(){
+			
+			var deg=0;
+			var max=90;
+			var time=null;
+			
+			function reset(){deg=0;};
+			
+			/*
+				@elem 翻牌的元素
+				@beforeClass 翻牌之前的样式
+				@afterClass 翻牌之后的样式
+				@callback 翻牌完成后调用的样式
+			*/
+			function fn(elem,beforeClass,afterClass,callback){
+				
+				time=setTimeout(function(){
+				
+					if(elem.className!=afterClass){
+						deg+=10;
+						
+						elem.style.WebkitTransform="rotateY("+deg+"deg)";	
+						if(deg>=max){
+							elem.className=afterClass;
+						}
+					}else{
+						elem.className==afterClass;
+						deg-=10;
+						elem.style.WebkitTransform="rotateY("+deg+"deg)";	
+						
+						if(deg<=0){
+							
+							elem.style.WebkitTransform="rotateY(0deg)";	
+			
+							clearTimeout(time);
+							reset();
+							elem.removeAttribute("style");
+							callback && callback();
+							
+							return;
+						}
+					}
+					
+					fn(elem,beforeClass,afterClass,callback);
+					
+				},speed);
+				
+			};
+			
+			return fn;
+			
+		})();
+		
+		//创建小的图标
+		function createMiniIco(left,top,classname,callback){
+			var poker_main=document.getElementById("J-luck-poker-main");
+			var zIndex=100;
+			
+			var div=document.createElement("div");
+			var t='position:absolute;left:'+left+'px;top:'+top+'px;z-index:'+zIndex+';';
+			
+			div.style.cssText=t;
+			div.className=classname;
+			
+			poker_main.appendChild(div);
+				
+			callback && callback(div);
+		};
+
+		//从左到右一个一个合上
+		function coverPokerAnimate(){
+			transPokerEvent(p0,"poker-front","poker-back",function(){
+				transPokerEvent(p1,"poker-front","poker-back",function(){
+					transPokerEvent(p2,"poker-front","poker-back",function(){
+						transPokerEvent(p3,"poker-front","poker-back",function(){
+							transPokerEvent(p4,"poker-front","poker-back",function(){
+								
+								setTimeout(function(){
+									randomPokerAnimate();
+								},100)
+
+							});
+						});
+					});
+				});
+			});
+		};	
+		
+		//牌随机移动动画
+		function randomPokerAnimate(){
+		
+			var r_aim=createRandomArray();
+			var mid=r_left[2];
+			
+			//把全部牌都往中间移动
+			animateMove(pw0,r_left[0],mid,function(){
+				animateMove(pw1,r_left[1],mid,function(){
+					animateMove(pw3,r_left[3],mid,function(){
+						animateMove(pw4,r_left[4],mid,function(){
+						
+							//再分散开
+							animateMove(pw0,mid,r_left[r_aim[0]],function(){
+								animateMove(pw1,mid,r_left[r_aim[1]],function(){
+									animateMove(pw2,mid,r_left[r_aim[2]],function(){
+										animateMove(pw3,mid,r_left[r_aim[3]],function(){
+											animateMove(pw4,mid,r_left[r_aim[4]],function(){
+												
+												G_touchKey=true;
+												
+											
+											});
+											
+										});
+									});
+								});
+							});
+							
+						});
+					});
+				});
+			});
+
+		};
+		
+		
+		//平移，会比 animate 效率要高些，所以单独写这个函数
+		function animateMove(elem,begin_left,end_left,callback){
+			if(begin_left == end_left ){
+				callback && callback();
+				return;
+			}
+			
+			var step_left;
+			
+			if(end_left > begin_left){
+				step_left = Math.ceil( (end_left-begin_left)/2 );
+				begin_left+=step_left;
+			}else{
+				step_left = Math.ceil( (begin_left-end_left)/2 );
+				begin_left-=step_left;
+			}
+			
+		
+			elem.style.left=begin_left+'px';
+			
+			if(begin_left==end_left ){
+				callback && callback();
+			}else{
+				setTimeout(function(){
+					animateMove(elem,begin_left,end_left,callback);
+				},speed);
+			}
+		};
+		
+		//基本动画函数
+		function animate(elem,begin_left,end_left,begin_top,end_top,callback){
+			var step_left,step_top;
+			
+			var x_left=end_left==begin_left ? 0 : Math.abs(end_left-begin_left);
+			var x_top=Math.abs(end_top-begin_top);
+			
+			var step_left= Math.ceil(x_left/10);
+			var step_top = begin_top == end_top ? 0 :  step_left*x_top/x_left;
+			
+			if(begin_left>end_left){
+				step_left=-step_left;
+			}
+			
+			begin_left+=step_left;
+			begin_top+=step_top;
+			
+			elem.style.left=begin_left+'px';
+			elem.style.top=begin_top+'px';
+			
+			if(begin_left==end_left && begin_top==end_top){
+				callback && callback();
+			}else{
+				setTimeout(function(){
+					animate(elem,begin_left,end_left,begin_top,end_top,callback)
+				},30);
+			}
+		};
+
+		/*===========================
+			@elem 翻牌的DOM节点
+			document.getElementById("J-poker-1")
+		=============================*/
+		function transPoker(elem,callback){
+			elem.addEventListener("click",function(){
+				if(!G_touchKey) return;
+				
+				transPokerEvent(elem,"poker-back","poker-front",callback);
+			});
+		};
+		
+		transPoker(p0);
+		transPoker(p1);
+		transPoker(p2);
+		transPoker(p4);
+		
+		var p3Key=true;
+		transPoker(p3,function(){
+			if(p3Key){
+				var i=r_left_v[parseInt(p3.parentNode.style.left)];
+				
+				console.log(i);
+				
+				var begin_left=G_position["begin"][i][0];
+				var begin_top=G_position["begin"][i][1];
+				
+				//坐标的左边那个数字，是确定下面4个小格子的哪一个格子
+				var end_left=G_position["end"][1][0];
+				var end_top=G_position["end"][1][1];
+			
+			
+				//小图标移动到4个小格子
+				createMiniIco(begin_left,begin_top,'ico-gift-exp2-mini',function(elem){
+					animate(elem,begin_left,end_left,begin_top,end_top,function(){
+						document.getElementById("J-award-main-deteil-1").innerHTML='';
+					});
+				});
+				
+				p3Key=false;
+			}
+		});
+		
+		
+		//禁用拖动页面
+		document.addEventListener('touchmove', function(e){
+			//e.preventDefault();
+		}, false);
+		
+		window.onload=function(){
+			coverPokerAnimate();
+		};
+	</script>
+	
+</body>
+</html>

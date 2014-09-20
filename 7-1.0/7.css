@@ -1,0 +1,233 @@
+@charset "utf-8";
+.vertical{
+	width:320px;
+	min-height:416px;
+}
+.transverse{
+	width:480px;
+	height:269px;
+}
+.block{
+	width:320px;
+	height:416px;
+	position:relative;
+	float:left;
+}
+.back-bt{
+	position:absolute;
+	left:15px;
+	top:15px;
+	width:60px;
+	height:50px;
+	background:url(images/back_bt.png) no-repeat left top;
+	z-index:100;
+	cursor:pointer;
+}
+#body{
+	margin:0 auto;
+	overflow:hidden;
+	position:relative;
+	background:#3C8FAE url(images/app_bg3.jpg) no-repeat;
+}
+#moveWrapper{
+	width:9999px;
+}
+
+#menu{}
+#menu h1{
+	text-align:center;
+	font-size:5em;
+	color:#fff;
+	padding:20px 0;
+	
+	text-shadow:1px 1px 1px #000;
+}
+#menu .menu{
+	text-align:center;
+}
+#menu .menu a{
+	width:120px;
+	margin:0 auto 20px;
+	border:2px solid #000;
+	border-radius:10px;
+	padding:10px 0;
+	font-size:1.2em;
+	display:block;
+	color:#fff;
+	text-shadow:1px 1px 1px #000;
+	text-decoration:none;
+	background-color: #6C9804;
+	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffFf3B), color-stop(3%, #90c70d), color-stop(100%, #5b7f05));
+	background-image:-moz-linear-gradient(top center, #ffFf3B 0%,#90c70d 3%,#5b7f05 100%);
+	
+	box-shadow:0 1px 0 #bbb;
+	-webkit-box-shadow:0 1px 0 #bbb;
+}
+#menu .menu a:active{
+	color:#fff;
+	background-color:#000;
+	background-image:none;
+}
+
+/*============= 游戏说明 =============*/
+/*============= 制作团队 =============*/
+#game_info_wrapper{}
+#game_team_wrapper{}
+.intro{
+	width:85%;
+	margin:100px auto 0;
+	
+	background:#D7DF46;
+	border:2px solid #222;
+	border-radius:20px;
+	padding:5px;
+}
+.intro section{
+	border-radius:15px;
+	border:2px solid #222;
+	background:#95E4CF;
+	padding:8px;
+}
+.intro h2{
+	color:#000;
+	text-shadow:0 1px 0 #fff;
+}
+.intro li{
+	color:#000;
+	font-size:1.1em;
+	text-shadow:0 1px 0 #fff;
+	padding-left:1.2em;
+	text-indent:-1.2em;
+}
+
+/*============= 游戏设置 =============*/
+#game_setting_wrapper{}
+#game_setting_wrapper section{
+	text-align:center;
+	padding:50px 0 0;
+	position:relative;
+	z-index:10;
+}
+#game_setting_wrapper h2{
+	font-size:3em;
+	color:#fff;
+	padding:10px 0;
+	text-shadow:1px 1px 1px #000;
+}
+#game_setting_wrapper ul{
+	padding:0 0 0 40px;
+}
+#game_setting_wrapper ul li{
+	float:left;
+	margin:0 40px 20px 0;
+	padding:1px;
+	background-color:#000;
+	border-radius:2px;
+}
+#game_setting_wrapper ul li:active{
+	transform:scale(1.5);
+	-webkit-transform:scale(1.5);
+	-moz-transform:scale(1.5);
+}
+#game_setting_wrapper ul li div,#game_setting_wrapper ul li img{
+	width:96px;
+	height:124px;
+	display:block;
+}
+#game_setting_wrapper ul li div{
+	background-color:#7495BC;
+	text-align:center;
+	line-height:96px;
+	color:#fff;
+	font-size:1.5em;
+	text-shadow:0 1px 0 #333;
+}
+#game_setting_wrapper ul li img{}
+
+#game_setting_wrapper .bg{
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	z-index:0;
+	opacity:0.4;
+	background-color:#000;
+}
+
+/*============= 游戏开始 =============*/
+#game_start_wrapper{
+	/*background:#3C8FAE;*/
+}
+.game-bt-up,.game-bt-down,.game-bt-space{
+	width:51px;
+	height:56px;
+	background:url(images/7-bts.png) no-repeat;
+}
+.game-bt-up{
+	background-position:0 0;
+}
+.game-bt-down{
+	background-position:-51px 0;
+}
+.game-bt-space{
+	background-position:-102px 0;
+}
+
+.sevenButton {
+    padding: 10px 0 0 140px;
+}
+.sevenButton li {
+	margin-bottom:2px;
+    display: block;
+    width:51px;
+	height:56px;
+    overflow: hidden;
+}
+.sevenButton li[class$='down']:active,.sevenButton li[class$='up']:active{
+	transform:scale(2);
+	-webkit-transform:scale(2);
+	-moz-transform:scale(2);
+}
+
+#game_start_wrapper .reset{
+	text-decoration:none;
+	position:absolute;
+	text-align:center;
+	bottom:15px;
+	left:15px;
+	border:1px solid #111;
+	border-radius:5px;
+	padding:8px 22px;
+	display:block;
+	font-size:1.2em;
+	color:#fff;
+	text-shadow:0 -1px 0 #000;
+	box-shadow:0 1px 0 #ccc;
+	-webkit-box-shadow:0 1px 0 #ccc;
+	background-color: #6C9804;
+	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fff), color-stop(2%, #396BCE), color-stop(100%, #193677));
+	background-image: -moz-linear-gradient(top center,#fff 0%,#396BCE 2%,#193677 100%);
+}
+#game_start_wrapper .reset:active{
+	background-color: #000;
+	background-image: none;
+}
+
+#yourTime{
+	position:absolute;
+	right:10px;
+	top:5px;
+	color:#fff;
+	font-weight:bolder;
+	text-shadow:0 -1px 0 #000;
+	font-size:1.4em;
+}
+#yourTime span{}
+
+ 
+ 
+ 
+ 
+ 
+ 

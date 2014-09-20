@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name=”format-detection” content=”telephone=no”/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <title>DEMO</title>
+        <link rel="stylesheet" type="text/css" href="css/Fuee-iphone.css">
+        </script>
+        <style type="text/css">
+        	body{
+        		min-height:416px;
+        	}
+         	#bg{
+         			 background-color:yellow;
+			width:200px;
+           	height:200px;
+			position:absolute;
+			left:0;
+			top:0; 
+			z-index:-1;
+         	}
+			#bg .bg{
+				height:99px;
+				width:200px;
+				position:absolute;
+				left:0;
+				top:0;
+				border-bottom:1px solid #ccc;
+			}
+            #msg2{
+            	position:absolute;
+				top:250px;
+				left: 10px;
+				background-color:#fff;
+				padding:10px;
+				border:2px solid #000;
+				width:200px;
+            }
+			#msg3{
+            	position:absolute;
+				top:320px;
+				left: 10px;
+				background-color:#fff;
+				padding:10px;
+				border:2px solid #000;
+				width:200px;
+            }
+            #msg {
+            	/*  padding:10px;
+                position:absolute;
+                left: 10px;
+                top: 10px;
+				width:200px;
+				height:200px;
+				overflow:hidden;
+				background-color:blue;  */
+            }  
+			#msgIn{
+				width:200px;
+				height:200px;
+				overflow:hidden;
+			} 
+			#msgMain{
+				background-color:#000;
+				color:#fff;
+			}
+		
+        </style>
+    </head>
+    <body>
+    	
+    	<div id="msg2"></div>
+		<div id="msg3"></div>
+		
+		<div id="msg">
+				<div id="msgMain" style="margin-top:0;">
+					<p>sdafdsafdsaf</p>
+					<p>sdafdsafdsaf</p>
+					<p>1111111111111</p>
+					<p>222222222222</p>
+					<p>333333333333333</p>
+					<p>44444444444444444</p>
+					
+				</div>
+		</div>
+		<div id="bg">
+    		<div class="bg"></div>
+    	</div>
+        <script type="text/javascript">
+        	
+			
+			var animate = (function(){
+			    return  function(obj){
+			        var elem = obj.elem, 
+			        	begin=obj.begin,				
+			        	end=obj.end,					
+			       		doingCallback = obj.doingCallback, 
+			       		endCallback=obj.endCallback,
+					 	speed = obj.speed || 5; //时间频率
+			        
+					(function(){
+			           if (begin == end){
+							endCallback && endCallback.call(elem, begin);
+							return;
+						}
+			            
+			            var step;
+			            if (begin < end) {
+			                step = Math.ceil((end - begin) / 10);
+			                begin += step;
+			            }
+			            else {
+			                step = Math.ceil((begin - end) / 10);
+			                begin -= step;
+			            }
+			            doingCallback.call(elem, begin);
+			            
+			            setTimeout(arguments.callee, speed);
+			        })();
+			    };
+			})();
+			
+			
+        	window.addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); 
+     function hideURLbar(){ 
+               window.scrollTo(0,1); 
+     } 
+			
+			 document.addEventListener('touchmove', function(event){
+                    event.preventDefault(); // the default behaviour is scrolling
+                }, false);
+			 document.addEventListener('touchstart', function(event){
+                    window.scrollTo(0,1); 
+                }, false);
+			
+			var msg=document.getElementById('msg');
+			var msgIn=document.getElementById('msgIn');
+			var msgMain=document.getElementById('msgMain');
+			
+			var msg2=document.getElementById('msg2');
+			var msg3=document.getElementById('msg3');
+			
+			var top,begin,temp;
+			var h=msgMain.offsetHeight-msg.offsetHeight;
+			
+			msg3.innerHTML='msgMain.offsetHeight='+msgMain.offsetHeight+'<br />msg.offsetHeight='+msg.offsetHeight;
+			msg.addEventListener('touchstart',function(e){
+				top=parseInt(msgMain.style.marginTop);
+				begin=event.targetTouches[0].pageY;
+			},false);
+			
+			msg.addEventListener('touchmove',function(e){
+				temp=parseInt( (top+e.targetTouches[0].pageY-begin)/2 );
+				
+				msgMain.style.marginTop=temp + 'px';
+				
+				msg2.innerHTML=top;
+			},false);
+			
+			msg.addEventListener('touchend',function(e){
+		
+				if(msgMain.offsetHeight<msg.offsetHeight || temp>=0){
+					//msgMain.style.marginTop=0;
+					animate({
+				    "elem": msgMain, 
+				    "begin": temp, 
+				    "end": 0, 
+				    "doingCallback": function(t){ 
+				        this.style.marginTop = t + "px"; 
+				    }
+					});
+				}else if(temp<=-h){
+					animate({
+				    "elem": msgMain, 
+				    "begin": temp, 
+				    "end": -h, 
+				    "doingCallback": function(t){ 
+				        this.style.marginTop = t + "px"; 
+				    }
+					});
+				}
+				
+				
+			},false)
+				
+//            window.addEventListener('load', function(){
+//				
+//			
+//                var b = document.getElementById('box'),  
+//             bstyle = b.style; // cached access to the style object
+//             	
+//				var begin,end,left,top;
+//				
+//				
+//			 	 b.addEventListener('touchstart', function(event){
+//                    event.preventDefault(); // the default behaviour is scrolling
+//                    begin = event.targetTouches[0].pageX;
+//                    end = event.targetTouches[0].pageY;
+//					left=parseInt(bstyle.left);
+//					top=parseInt(bstyle.top);
+//                }, false);
+//			 
+//                b.addEventListener('touchmove', function(event){
+//                    //event.preventDefault(); // the default behaviour is scrolling
+//                    bstyle.left =left+ event.targetTouches[0].pageX-begin + 'px';
+//                    bstyle.top = top+event.targetTouches[0].pageY-end + 'px';
+//                }, false);
+//            }, false);
+			
+//			window.addEventListener('load', function() {
+//
+//    var b = document.getElementById('box'),
+//
+//    bstyle = b.style;
+//
+//    b.addEventListener('gesturechange', function(event) {
+//
+//        event.preventDefault();
+//
+//        bstyle.webkitTransform = 'scale(' + event.scale + ') ' +
+//
+//        'rotate('+ event.rotation + 'deg)';
+//
+//    }, false);
+//
+//}, false);
+        </script>
+    </body>
+</html>

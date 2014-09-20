@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<meta charset="utf-8" />
+		<title>t8</title>
+		<style type="text/css">
+			body{
+				
+			}
+			canvas{
+				/*border:1px solid #ccc;*/
+			}
+			
+		</style>
+	</head>
+	<body>
+		
+		<canvas id="canvas" width="320" height="416" style="position:relative;">
+			Oops~,your browser doesn't support the HTML5 element canvas.
+		</canvas>
+		
+		<script type="text/javascript">
+			
+			var canvas=document.getElementById("canvas");
+			var ctx=canvas.getContext("2d");
+			var width=320;
+			var height=416;
+			var FPS=30;
+			var intervalTime=parseInt(1000/FPS);
+			
+			var gameZoneWidth=300,
+				gameZoneHeight=260;
+			
+			var playWidth=20,
+				playHeight=20;
+			
+			//炸弹
+			var Bombs=[];
+				
+			//飞机初始位置
+			var px=(gameZoneWidth-playWidth)/2,
+				py=(gameZoneHeight-playHeight)/2;
+			
+			function clearCanvas(){
+				ctx.clearRect(0,0,width,height);
+			};
+			
+			function drawBackground(){
+				ctx.save();
+				
+				ctx.fillStyle="#282834";
+				ctx.fillRect(0,0,gameZoneWidth,gameZoneHeight);
+				
+				ctx.restore();
+			};
+			
+			
+			function drawPlane(){
+				var plane=new Image();
+				plane.src="plane.png";
+				
+				ctx.drawImage(plane, px, py, 23, 21);
+			};
+			
+			
+			function Bomb(){
+				this.r=parseInt( Math.random()*4+3);
+				
+				this.t=Math.random();
+				this.x;
+				this.y;
+				
+				if(this.t>0.5){
+					this.x=parseInt( Math.random()*gameZoneWidth);
+					this.y=1;
+				}else{
+					this.x=1;
+					this.y=parseInt( Math.random()*gameZoneHeight);
+				}
+			};
+			
+			Bomb.prototype.drawOneBomb=function(r,x,y){
+				ctx.save();
+				
+				ctx.beginPath();
+				ctx.fillStyle="#80ff00";
+				ctx.arc(x,y,r,0,Math.PI*2,true);
+				ctx.fill();
+				ctx.closePath();
+				
+				ctx.restore();
+			};
+			
+			Bomb.prototype.moveOneBomb=function(){
+				
+//				var r=parseInt( Math.random()*4+3);
+//				
+//				var t=Math.random();
+//				var x,y;
+//				
+//				if(t>0.5){
+//					x=parseInt( Math.random()*gameZoneWidth);y=1;
+//				}else{
+//					x=1;y=parseInt( Math.random()*gameZoneHeight);
+//				}
+				
+				//return function(){
+					this.drawOneBomb(this.r,this.x,this.y);
+					
+					this.x+=1;
+					this.y+=1;
+				//};
+				
+			};
+			
+			function moveBombs(){	
+			};
+			
+			var b1=new Bomb();
+			var b2=new Bomb();
+			
+			function Play(){
+				clearCanvas();
+				
+				drawBackground();
+	
+				b1.moveOneBomb();
+				b2.moveOneBomb();
+				
+				setTimeout(function(){
+					Play();
+				},intervalTime);
+				
+			};
+			
+			Play();
+			
+			document.onkeydown=function(e){
+				//alert(e.keyCode);
+				//up 38, down 40, left 37, right 39
+			};
+		</script>
+	</body>
+</html>

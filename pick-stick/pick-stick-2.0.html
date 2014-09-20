@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="format-detection" content="telephone=no" />
+		<title>Pick Stick 2.0</title>
+		<link rel="stylesheet" type="text/css" href="../css/FIP-1.0.css" />
+		<link rel="stylesheet" type="text/css" href="pick-stick-2.0.css" />
+		
+		<script type="text/javascript" src="../js/FIP-1.0.js"></script>
+		<script type="text/javascript">	
+			//全局变量
+			var global_para={
+				eventName:(FIP.isTouch ? 'touchstart' : 'click')
+			};
+			
+			FIP.ready(function(){
+				FIP.stopPageDrag();
+				FIP.stopHandSelect("#gameinfo a");
+				
+				var cs;
+				//确认游戏是否暂停。暂停为true
+				var pauseKey=false;
+				
+				//确认游戏是否点击了开始。开始了为true
+				var startKey=false;
+				
+				//悄悄地进行加载脚本和进行游戏初始化
+				//反正这个时候用户不会察觉到，提高了用户体验，“加快了”游戏速度
+				FIP.loadScriptEx(['pick-stick-2.0.1.js'],function(){
+					FIP.loading.createLoading('Loading JS...');
+				},function(){
+					FIP.loading.removeLoading(function(){
+						var snum=FIP.isTouch ? 20 : 30;
+						
+						cs = PickSticks({
+							'wrapperId': 'wrap',
+							'sticksWrapId': 'sticksWrap',
+							'restartId': 'restart',
+							'resultId': 'resultNumber',
+							'timeMinId': 'time_min',
+							'timeSecId': 'time_sec',
+							'num': snum
+						});
+						
+						cs.gameStart(function(){
+							//如果还没点击开始，就先暂停
+							if(!startKey){
+								cs.gamePause();
+								pauseKey=true;
+							}
+						});
+						
+						document.getElementById('restart').addEventListener('click', cs.gameStart, false);
+						
+						//两个手指按住屏幕，就刷新了。
+						try {
+							document.getElementById('page').addEventListener('touchstart', function(event){
+								if (event.targetTouches[0].pageX && event.targetTouches[1].pageX) {
+									cs.gameStart();
+								}
+							}, false);
+						} catch (e) {}
+					});
+				});
+								
+				document.getElementById('start_game').addEventListener(global_para.eventName,function(){
+					startKey=true;
+					
+					var speed=FIP.isTouch ? 4 : 10;
+					
+					FIP.animate({
+						elem:'gameinfo',
+						begin:0,
+						end:-416,
+						speed:speed,
+						doingCallback:function(v){
+							this.style.marginTop=v+'px';
+						},
+						endCallback:function(){
+							FIP.hide('gameinfo');
+							
+							if(cs && pauseKey) cs.gameContinue();
+						}
+					});
+				},false);
+				
+			});//end ready();
+		</script>
+	</head>
+	<body>
+		<div id="page">
+			
+			<div id="gameinfo" style="margin-top:0;">
+				<h1>PickSticks</h1>
+				
+				<a href="javascript:;" class="startGame" id="start_game">Play</a>
+				
+				<div class="gameinfo-info">
+					<p>Made By Paper</p>
+					<p>Copyright &copy; Jonathan Tenkely</p>
+					<p>Chrome & Safari & Firefox & Iphone4</p>
+				</div>
+			</div>
+			
+			<div class="wrap" id="wrap">
+				<div class="score">
+					<div class="time">
+						<span id="time_min">00</span>:<span id="time_sec">00</span>
+					</div>
+					<div id="resultNumber">0</div>
+				</div>
+				
+				<div id="sticksWrap"></div>
+			</div>
+			
+			<button class="button" id="restart">Restart</button>
+		</div>
+	</body>
+</html>
