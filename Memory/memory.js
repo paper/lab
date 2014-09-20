@@ -453,7 +453,9 @@
 				
 				allowRestart();
 				
-				lastMissionBt.innerHTML="再来一次?";
+				lastMissionBt.innerHTML = "再来一次? ";
+        
+        $Id("J-moremsg").innerHTML = "可分享到朋友圈哦～，快快点击右上角吧!";
 
 				isFunction(callback) && callback();
 			});
