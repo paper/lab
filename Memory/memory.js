@@ -32,6 +32,8 @@
 	
 	 	time=new FIP.GetTime("gameTimeMin","gameTimeSec"),
 	
+  
+    page = $Id("page"),
 	 	showMsg=$Id("showMsg"),
 		lastMissionBt=$Id("lastMissionBt"),
 		gameHelp=$Id("gameHelp"),
@@ -121,25 +123,36 @@
 	//得到鼠标(或手指)在canvas点击时的坐标
 	//canvas 必须设置position为relative 或 absulote (for Firefox)
 	//通过条件判断，函数内部从新改写主函数，这是提高性能的一个技巧，这样以后运行时不必每次都进行条件判断！
-    function getMouse(e){
+  function getMouse(e){
         if (FIP.isTouch) {
 			getMouse = function(e){
+        
+        var pagetLeft = page.offsetLeft;
+        
 				return {
-					x: e.targetTouches[0].pageX,
+					x: e.targetTouches[0].pageX - pagetLeft,
 					y: e.targetTouches[0].pageY
 				}
 			};
 		}
 		else {
 			getMouse = function(e){
-				if (e.offsetX) { return {
+        
+        var pagetLeft = page.offsetLeft;
+        
+        return {
+					x: e.pageX - pagetLeft,
+					y: e.pageY
+				}
+        
+				/*if (e.offsetX) { return {
 					x: e.offsetX,
 					y: e.offsetY
 				}} 
 				else if (e.layerX) { return {
 					x: e.layerX,
 					y: e.layerY
-				}}
+				}}*/
 			};
 		}
 		
