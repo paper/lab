@@ -10,80 +10,9 @@
     <link rel="shortcut icon" href="favicon.png" />
     <link rel="icon" type="image/png" href="favicon.png" />
     
-		<link rel="stylesheet" type="text/css" href="../css/FIP-1.0.css" />
-		<link rel="stylesheet" type="text/css" href="memory.css" />
+		<link rel="stylesheet" href="../css/FIP-1.0.css" />
+		<link rel="stylesheet" href="memory.css" />
 		
-		<script type="text/javascript" src="../js/FIP-1.0.js?2014"></script>
-		<script type="text/javascript">
-			//全局变量
-			var global_para={
-				eventClick:(FIP.isTouch ? 'touchstart' : 'click')
-			};
-		
-			FIP.ready(function(){
-				FIP.stopPageDrag();
-				FIP.stopHandSelect("#startGame");
-				
-				var memory;
-				
-				//确认游戏是否暂停。暂停为true
-				var pauseKey=false;
-				
-				//确认游戏是否点击了开始。开始了为true
-				var startKey=false;
-				
-				//悄悄地进行加载脚本和游戏初始化
-				//反正这个时候用户不会察觉到，提高了用户体验，“加快了”游戏速度
-				FIP.loadScriptEx(['memory.js'],function(){
-					FIP.loading.createLoading('Loading JS...');
-				},function(){
-					FIP.loading.removeLoading(function(){
-
-						memory=new Memory("canvas");
-						
-						memory.mission1(function(){
-							//如果还没点击开始，就先暂停
-							if(!startKey){
-								memory.gamePause();
-								pauseKey=true;
-							}
-								
-							document.getElementById("restart").addEventListener(global_para.eventClick,function(){
-								memory.mission2();
-							},false);
-							
-							document.getElementById("lastMissionBt").addEventListener(global_para.eventClick,function(){
-								memory.mission2( function(){
-                  memory.isLastMission = true;
-                } );
-							},false);
-						});
-					});
-				});
-				
-				//开始游戏
-				document.getElementById('startGame').addEventListener(global_para.eventClick,function(){
-					startKey=true;
-					
-					FIP.animate({
-						elem:'gameCover',
-						begin:0,
-						end:-416,
-						speed:8,
-						doingCallback:function(v){
-							this.style.marginTop=v+'px';
-						},
-						endCallback:function(){
-							FIP.hide('gameCover');
-							
-							if(memory && pauseKey) memory.gameContinue();
-						}
-					});
-				},false);
-				
-			});//end ready();
-			
-		</script>
 	</head>
 	<body>
     
@@ -127,7 +56,71 @@
 				</canvas>
 			</div>
 
-			<button class="button" id="restart">Restart</button>
+			<button class="button" id="restart" style="display:none;">Restart</button>
 		</div>
+    
+    <script src="../js/FIP-1.0.js?2014"></script>
+    <script src="memory.js?2014"></script>
+		<script>
+      //全局变量
+      var global_para={
+        eventClick:(FIP.isTouch ? 'touchstart' : 'click')
+      };
+
+      FIP.ready(function(){
+        FIP.stopPageDrag();
+        FIP.stopHandSelect("#startGame");
+        
+        var memory;
+        
+        //确认游戏是否暂停。暂停为true
+        var pauseKey=false;
+        
+        //确认游戏是否点击了开始。开始了为true
+        var startKey=false;
+
+        memory=new Memory("canvas");
+        
+        memory.mission1(function(){
+          //如果还没点击开始，就先暂停
+          if(!startKey){
+            memory.gamePause();
+            pauseKey=true;
+          }
+            
+          document.getElementById("restart").addEventListener(global_para.eventClick,function(){
+            memory.mission2();
+          },false);
+          
+          document.getElementById("lastMissionBt").addEventListener(global_para.eventClick,function(){
+            memory.mission2( function(){
+              memory.isLastMission = true;
+            } );
+          },false);
+        });
+        
+        //开始游戏
+        document.getElementById('startGame').addEventListener(global_para.eventClick,function(){
+          startKey=true;
+          
+          FIP.animate({
+            elem:'gameCover',
+            begin:0,
+            end:-416,
+            speed:8,
+            doingCallback:function(v){
+              this.style.marginTop=v+'px';
+            },
+            endCallback:function(){
+              FIP.hide('gameCover');
+              
+              if(memory && pauseKey) memory.gameContinue();
+            }
+          });
+        },false);
+        
+      });//end ready();
+			
+		</script>
 	</body>
 </html>
