@@ -312,7 +312,7 @@
 						remove_cache.push(i);
 						
 						//移除方块
-						ctx2d.clearRect(box[0], box[1], box[2], box[3]);
+						ctx2d.clearRect(box[0] - 2, box[1] - 2, box[2] + 4, box[3] + 4);
 						//贴上图片
 						ctx2d.drawImage(imagesObject[imagesObjectIndexI], box[0], box[1], box[2], box[3]);
 						
