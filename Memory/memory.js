@@ -257,8 +257,9 @@
 	Memory.prototype.removeBox_sameImage = function(ctx2d,box1,box2,callback){
 
 		setTimeout(function(){
-			ctx2d.clearRect(box1[0],box1[1], box1[2], box1[3]);
-			ctx2d.clearRect(box2[0],box2[1], box2[2], box2[3]);
+      // fix retina
+			ctx2d.clearRect(box1[0] - 2,box1[1] - 2, box1[2] + 4, box1[3] + 4);
+			ctx2d.clearRect(box2[0] - 2,box2[1] - 2, box2[2] + 4, box2[3] + 4);
 			
 			isFunction(callback) && callback();
 		}, 300);
