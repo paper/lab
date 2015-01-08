@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Publish/Subscribe</title>
+  <script src="index.js"></script>
+</head>
+<body>
+	<script>
+    var adultTv = new PubSub();
+    
+    //一些订阅的人
+    adultTv.subscribe('play1',  function( data ){
+      // 如果有“人”发布了 play1 ，那么就会自动运行下面的alert
+       alert("今天是谁的电影 - " + data.name );
+    });
+    
+    adultTv.subscribe('play1',  function( data ){
+       alert("另外一个人也订阅了，今天是谁的电影 - " + data.name );
+    });
+    
+    adultTv.subscribe('play2',  function( data ){
+       alert("今天是谁的电影 - " + data.name );
+    });
+
+    //发布者
+    adultTv.publish('play1',  { 'name': '麻生希' } );
+    adultTv.publish('play2',  { 'name': '苍井空' } );
+    
+    adultTv.unsubscribe("play2");
+    adultTv.publish('play2',  { 'name': '松岛枫' } );
+    
+  </script>
+</body>
+</html>
