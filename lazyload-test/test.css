@@ -1,0 +1,36 @@
+@chartset "utf-8";
+
+*{margin:0;padding:0;}
+body{font:12px/1.4 arial;}
+.clear{clear:both;}
+.clearfix:after{content:".";display:block;height:0;line-height:0;clear:both;visibility:hidden;font-size:0;}
+h1{font-size:14px; margin-bottom:10px;}
+
+h2{font-size:12px;}
+ul,ol,li{list-style:none;}
+
+.page{
+  width:600px;
+  margin:20px auto 0;
+}
+
+.main{
+  float:left;
+  width:360px;
+}
+
+.side{
+  float:right;
+  width:200px;
+}
+
+.main img,
+.side img{
+  width:170px;
+  height:90px;
+}
+
+.news-content-block{
+  width:170px;
+  margin-bottom:10px;
+}
