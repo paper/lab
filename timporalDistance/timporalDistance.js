@@ -28,6 +28,8 @@
     var beginTimeStamp = +beginDate;
     var endTimeStamp = +endDate;
     
+    var endDateHours = endDate.getHours();
+    
     if( endTimeStamp < beginTimeStamp ){
       suffix = "后";
     }
@@ -41,8 +43,11 @@
     
     if( minute < 59 ){
       str = parseInt( minute, 10 ) + 1 + "分钟";
-    }else if( hour < 23  ){
+    }else if( hour < endDateHours  ){
       str = parseInt( hour, 10 ) + 1 + "小时";
+    }else if( hour > endDateHours && hour < 23  ){
+      // 如果时间间隔，大于当前系统的小时，但有小于23，那肯定是昨天
+      str = "1天";
     }else if( day < 29 ){
       str = parseInt( day, 10 ) + 1 + "天";
     }else if( month < 11 ){
