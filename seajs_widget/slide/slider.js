@@ -10,12 +10,11 @@
 define(function(require, exports, module) {
   
   var Slider = {};
+  var noop = function(){};
   
-  Slider.init = function(options){
+  Slider.init = function(o){
   
-    var noop = function(){};
-    
-    options = $.extend({
+    o = $.extend({
       // 左按钮
       '$prevBtn': null,
       'prevBtnDisabledClassName' : 'disabled',
@@ -54,39 +53,42 @@ define(function(require, exports, module) {
       // 是否自动轮播
       'auto': false,
       'autoInterval' : 3000
-    }, options);
+    }, o);
    
-    var $prevBtn = options.$prevBtn;
-    var prevBtnDisabledClassName = options.prevBtnDisabledClassName;
-    var prevBtnValidClassName = options.prevBtnValidClassName;
-    var prevBtnCallback = options.prevBtnCallback;
+    var $prevBtn = o.$prevBtn;
+    var prevBtnDisabledClassName = o.prevBtnDisabledClassName;
+    var prevBtnValidClassName = o.prevBtnValidClassName;
+    var prevBtnCallback = o.prevBtnCallback;
     
-    var $nextBtn = options.$nextBtn;
-    var nextBtnDisabledClassName = options.nextBtnDisabledClassName;
-    var nextBtnValidClassName = options.nextBtnValidClassName;
-    var nextBtnCallback = options.nextBtnCallback;
+    var $nextBtn = o.$nextBtn;
+    var nextBtnDisabledClassName = o.nextBtnDisabledClassName;
+    var nextBtnValidClassName = o.nextBtnValidClassName;
+    var nextBtnCallback = o.nextBtnCallback;
     
-    var $dotWrap = options.$dotWrap;
-    var dotCurClassName = options.dotCurClassName;
-    var dotBtnCallback = options.dotBtnCallback;
+    var $dotWrap = o.$dotWrap;
+    var dotCurClassName = o.dotCurClassName;
+    var dotBtnCallback = o.dotBtnCallback;
     
-    var callback = options.callback;
+    var callback = o.callback;
     
-    var total = options.total;
-    var stepWidth = options.stepWidth;
+    var total = o.total;
+    var stepWidth = o.stepWidth;
     
-    var $wrap = options.$wrap;
-    var $list = options.$list;
-    var direction = options.direction;
+    var $wrap = o.$wrap;
+    var $list = o.$list;
+    var direction = o.direction;
     
-    var auto = options.auto;
-    var autoInterval = options.autoInterval;
+    var auto = o.auto;
+    var autoInterval = o.autoInterval;
     
     
     var curPos = 0;
     var curIndex = 0;
     var $someDot = null;
     
+    var time = null;
+    var key = true;
+
     function prevBtnDisabled(){
       $prevBtn.removeClass( prevBtnValidClassName ).addClass( prevBtnDisabledClassName );
     }
@@ -131,7 +133,7 @@ define(function(require, exports, module) {
     }
     
     // 小圆点初始化
-    function initDot( callback ){
+    function initDot(){
       
       if( $dotWrap ){
       
@@ -148,27 +150,19 @@ define(function(require, exports, module) {
         $dotWrap.html( dotHtml );
         
         if( total > 1 ){
-        
+          
           $someDot = $dotWrap.find("a");
           
-          $someDot.on('click', function(){
-          
-            var i = $(this).attr("data-chw-slider");
+          $dotWrap.on("click", "a", function(){
+            var i = +$(this).attr("data-chw-slider");
             animate(i);
             
             dotBtnCallback.call(this, curIndex, total, stepWidth);
             callback(curIndex, total, stepWidth);
           });
+          
         }
         
-      }
-      
-      if( total <= 1 || stepWidth == 0 || $list == null ){
-        return;
-      }else{
-        setTimeout(function(){
-          callback && callback();
-        }, 1);
       }
     }
     
@@ -208,17 +202,6 @@ define(function(require, exports, module) {
         return;
       }
       
-      var time = null;
-      var key = true;
-      
-      $wrap.on('mouseover', function(){
-        key = false;
-      });
-      
-      $wrap.on('mouseout', function(){
-        key = true;
-      });
-      
       function fn(){
         
         time = setTimeout(function(){
@@ -240,16 +223,23 @@ define(function(require, exports, module) {
       
       fn();
       
+      $wrap.on('mouseover', function(){
+        key = false;
+      });
+      
+      $wrap.on('mouseout', function(){
+        key = true;
+      });
+      
     }//end autoScroll
     
     updateSomething();
+
+    initPrevBtn();
+    initNextBtn();
+    initDot();
     
-    initDot(function(){
-      initPrevBtn();
-      initNextBtn();
-      
-      autoScroll();
-    });
+    autoScroll();
     
   }//end Slider.init
   

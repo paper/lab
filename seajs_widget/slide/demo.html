@@ -1,10 +1,194 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>widget slide</title>
+  <title>seajs widget slide</title>
+  
+  <style>
+    *{margin:0; padding:0;}
+    ul,ol,li{list-style:none;}
+    
+    body{font-family:microsoft yahei;}
+    
+    
+    
+    
+
+    .gallery{
+      float:left;
+      margin:100px 0 0 100px;
+    }
+    
+    .gallery-hd{
+      margin-bottom:12px;
+    }
+    
+    .gallery-bd{
+      position:relative;
+    }
+    
+    .gallery-btn-wrap{}
+    .gallery-btn-wrap a{
+      position:absolute;
+      width:50px;
+      height:50px;
+      line-height:50px;
+      text-align:center;
+      top:26px;
+      background-color:#f4f4f4;
+      color:#039;
+      text-decoration:none;
+    }
+    .gallery-btn-wrap a:hover{
+      background-color:#e4e4e4;
+    }
+    .gallery-btn-wrap a.prev-btn{left:-60px;}
+    .gallery-btn-wrap a.next-btn{right:-60px;}
+    
+    .gallery-btn-wrap a.prev-btn-disabled,
+    .gallery-btn-wrap a.next-btn-disabled{
+      opacity:0.3;
+      cursor:default;
+    }
+    
+    .gallery-content{
+      overflow: hidden;
+      position: relative;
+      width: 320px;
+      height:100px;
+    }
+    .gallery-content ul{
+      width:9999px;
+      position:absolute;
+      left:0;
+      top:0;
+      transition: all 0.5s ease 0s;
+    }
+    .gallery-content li{
+      float:left;
+      margin-right:10px;
+    }
+    .gallery-content li div{
+      width:100px;
+      height:100px;
+      line-height:100px;
+      text-align:center;
+      background-color:#888;
+      color:#fff;
+    }
+    
+    
+    .gallery-dot-wrap{
+      text-align:center;
+    }
+    .gallery-dot-wrap a {
+      border-radius: 50%;
+      display: inline-block;
+      height: 8px;
+      margin: 0 3px;
+      width: 8px;
+      background-color:#eee;
+    }
+    .gallery-dot-wrap a.cur{
+      background-color: #4bb5f5;
+    }
+    
+    
+    
+  </style>
+  
+  <script src="http://cdn.staticfile.org/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://cdn.staticfile.org/seajs/2.3.0/sea.js" id="seajsnode"></script>
+  <script>
+    seajs.config({
+      alias:{
+        slider : './slider.js',
+      },
+      debug: true,
+      charset: 'utf-8'
+    }); 
+  </script>
 </head>
 <body>
+  
+  
+  <div class="gallery" id="J_gallery">
+    <div class="gallery-hd">
+      <h3>轮播图</h3>
+    </div>
+    
+    <div class="gallery-bd">
+      <div class="gallery-btn-wrap">
+        <a href="javascript:;" class="prev-btn">&lt;</a>
+        <a href="javascript:;" class="next-btn">&gt;</a>
+      </div>
+      
+      <div class="gallery-main">
+        <div class="gallery-content">
+          <ul>
+            <li><div>1</div></li>
+            <li><div>2</div></li>
+            <li><div>3</div></li>
+            <li><div>4</div></li>
+            <li><div>5</div></li>
+            <li><div>6</div></li>
+            <li><div>7</div></li>
+            <li><div>8</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="gallery-ft">
+      <div class="gallery-dot-wrap">
+        
+      </div>
+    </div>
+  </div>
+  
+  
+  <script>
+    seajs.use('slider', function(slider){
+      var n = 3;
+      var $items = $('#J_gallery .gallery-content li');
+      var len = $items.length;
+      
+      var total = Math.ceil(len / n);
+      
+      slider.init({
+        '$wrap' : $('#J_gallery'),
+        '$list' : $('#J_gallery .gallery-content  ul'),
+        
+        '$dotWrap' : $('#J_gallery .gallery-dot-wrap'),
+        'dotBtnCallback' : function(curIndex, total, stepWidth){
+          
+        },
+        
+        '$prevBtn' : $('#J_gallery .gallery-btn-wrap .prev-btn'),
+        'prevBtnDisabledClassName' : 'prev-btn-disabled',
+        'prevBtnValidClassName' : 'prev-btn-valid',
+        'prevBtnCallback' : function(curIndex, total, stepWidth){
+          
+        },
+        
+        '$nextBtn' : $('#J_gallery .gallery-btn-wrap .next-btn'),
+        'nextBtnDisabledClassName' : 'next-btn-disabled',
+        'nextBtnValidClassName' : 'next-btn-valid',
+        'nextBtnCallback' : function(curIndex, total, stepWidth){
+          
+        },
+        
+        'callback' : function(curIndex, total, stepWidth){
+          
+        },
+        
+        'total' : total,
+        'auto' : true,
+        'autoInterval' : 5000,
+        'stepWidth' : 330
+      });
+    });
+  </script>
   
 </body>
 </html>
